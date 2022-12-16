@@ -7,6 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Field: typeof import('./components/Field.vue')['default']
+    Formik: typeof import('./components/Formik.vue')['default']
+    Formiq: typeof import('./components/Formik.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

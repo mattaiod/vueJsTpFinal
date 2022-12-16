@@ -1,56 +1,37 @@
-<script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
-})
-const user = useUserStore()
-const name = $ref(user.savedName)
-
-const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
-
-const { t } = useI18n()
+<script setup>
 </script>
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
-    </div>
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank">
-        Vitesse
-      </a>
-    </p>
-    <p>
-      <em text-sm opacity-75>{{ t('intro.desc') }}</em>
-    </p>
-
-    <div py-4 />
-
-    <TheInput
-      v-model="name"
-      placeholder="What's your name?"
-      autocomplete="false"
-      @keydown.enter="go"
-    />
-    <label class="hidden" for="input">{{ t('intro.whats-your-name') }}</label>
-
-    <div>
-      <button
-        btn m-3 text-sm
-        :disabled="!name"
-        @click="go"
-      >
-        {{ t('button.go') }}
-      </button>
-    </div>
+    <Formik
+      v-slot="{ values, errors, handleSubmit, isSubmitting }"
+      :initial-values="{ name: '' }"
+      :validate="values => {
+        const errors = {
+          name: '',
+        }
+        if (!values.name) {
+          errors.name = 'Required'
+        }
+        return errors
+      }"
+      :on-submit="(values, actions) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }, 1000);
+      }"
+    >
+      <form @submit="handleSubmit(values)">
+        <Field v-model="values.name" as="text" name="text" />
+        <div v-if="errors.name">
+          {{ errors.name }}
+        </div>
+        <button type="submit" :disabled="isSubmitting">
+          Submit
+        </button>
+      </form>
+    </Formik>
   </div>
 </template>
 
-<route lang="yaml">
-meta:
-  layout: home
-</route>
