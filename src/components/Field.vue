@@ -18,6 +18,8 @@ const state = reactive({
 <template>
   <div>
     <label :for="props.name">{{ props.name }}</label>
-    <input v-model="state.value" :type="props.as" :name="props.name">
+    <component :is="props.as" v-model="state.value" :name="props.name">
+      <slot />
+    </component>
   </div>
 </template>

@@ -23,7 +23,6 @@ const state = reactive({
 })
 
 const onSubmit = (e: Event) => {
-  debugger
   e.preventDefault()
 
   state.isSumitting = true
