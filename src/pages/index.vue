@@ -23,7 +23,7 @@
       }"
     >
       <form @submit="handleSubmit(values)">
-        <Field v-model="values.name" as="text" name="text" />
+        <Field v-model="values.name" as="textarea" name="textarea" />
         <div v-if="errors.name">
           {{ errors.name }}
         </div>
